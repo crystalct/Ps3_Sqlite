@@ -136,9 +136,8 @@ sqlite3 *db_open(const char *path, int flags)
   sqlite3 *db;
 
   rc = sqlite3_open_v2(path, &db,
-		       SQLITE_OPEN_READONLY,
-			   //SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE |
-		       //SQLITE_OPEN_NOMUTEX | SQLITE_OPEN_SHAREDCACHE,
+			   SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE |
+		       SQLITE_OPEN_NOMUTEX | SQLITE_OPEN_SHAREDCACHE,
 		       NULL);
 
   if(rc) {
