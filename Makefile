@@ -164,6 +164,7 @@ install: $(BUILD)
 	@echo Copying...
 	@cp $(TARGET).a $(PSL1GHT)/ppu/lib
 	@cp include/ps3sqlite.h $(PSL1GHT)/ppu/include
+	@cp source/sqlite3.h $(PSL1GHT)/ppu/include
 	@echo Done!
 
 else
