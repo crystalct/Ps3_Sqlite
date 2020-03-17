@@ -25,18 +25,18 @@ SCETOOL_FLAGS	+=
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+TARGET		:=	libps3sqlite
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 SHADERS		:=	shaders
-INCLUDES	:=	include
+INCLUDES	:=	
 
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:=	-lfont -ltiny3d -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
+LIBS		:=	-lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
 
 
 #---------------------------------------------------------------------------------
@@ -160,6 +160,12 @@ npdrm: $(BUILD)
 
 #---------------------------------------------------------------------------------
 
+install: $(BUILD)
+	@echo Copying...
+	@cp $(TARGET).a $(PSL1GHT)/ppu/lib
+	@cp include/ps3sqlite.h $(PSL1GHT)/ppu/include
+	@echo Done!
+
 else
 
 DEPENDS	:=	$(OFILES:.o=.d)
@@ -167,8 +173,9 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-$(OUTPUT).self: $(OUTPUT).elf
-$(OUTPUT).elf:	$(OFILES)
+#$(OUTPUT).self: $(OUTPUT).elf
+#$(OUTPUT).elf:	$(OFILES)
+$(OUTPUT).a: base64.o db_support.o fa_data.o fa_fs.o fileaccess.o font_b.o ps3_main.o rstr.o sqlite3.o str.o vfs.o wd.o
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .bin extension
