@@ -25,18 +25,18 @@ SCETOOL_FLAGS	+=
 # SOURCES is a list of directories containing source code
 # INCLUDES is a list of directories containing extra header files
 #---------------------------------------------------------------------------------
-TARGET		:=	libps3sqlite
+TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
 SOURCES		:=	source
 DATA		:=	data
 SHADERS		:=	shaders
-INCLUDES	:=	
+INCLUDES	:=	include
 
 
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:=	-lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
+LIBS		:=	-lps3sqlite -lfont -lfreetype -ltiny3d -lz -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
 
 
 #---------------------------------------------------------------------------------
@@ -127,7 +127,7 @@ export INCLUDE	:=	$(foreach dir,$(INCLUDES), -I$(CURDIR)/$(dir)) \
 # build a list of library paths
 #---------------------------------------------------------------------------------
 export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib) \
-					$(LIBPSL1GHT_LIB) -L$(PORTLIBS)/lib
+					$(LIBPSL1GHT_LIB) -L$(PORTLIBS)/lib -L$(BUILDDIR)
 
 export OUTPUT	:=	$(CURDIR)/$(TARGET)
 .PHONY: $(BUILD) clean
@@ -142,6 +142,7 @@ $(BUILD):
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(OUTPUT).elf $(OUTPUT).self  EBOOT.BIN
+	make -C libps3sqlite clean
 
 #---------------------------------------------------------------------------------
 run:
@@ -160,12 +161,26 @@ npdrm: $(BUILD)
 
 #---------------------------------------------------------------------------------
 
-install: $(BUILD)
+install: lib
 	@echo Copying...
-	@cp $(TARGET).a $(PSL1GHT)/ppu/lib
+	@cp $(BUILDDIR)/libps3sqlite.a $(PSL1GHT)/ppu/lib
 	@cp include/ps3sqlite.h $(PSL1GHT)/ppu/include
-	@cp source/sqlite3.h $(PSL1GHT)/ppu/include
+	@cp include/sqlite3.h $(PSL1GHT)/ppu/include
+	@cp include/fa_proto.h $(PSL1GHT)/ppu/include
 	@echo Done!
+	
+uninstall:
+	@echo Removing...
+	@rm -fr $(PSL1GHT)/ppu/lib/libps3sqlite.a
+	@rm -fr $(PSL1GHT)/ppu/include/ps3sqlite.h
+	@rm -fr $(PSL1GHT)/ppu/include/sqlite3.h
+	@rm -fr $(PSL1GHT)/ppu/include/fa_proto.h
+	@echo Done!
+	
+lib:
+	@make -C libps3sqlite
+	@if [ ! -d "$(BUILDDIR)" ]; then mkdir $(BUILDDIR); fi
+	@mv libps3sqlite/libps3sqlite.a $(BUILDDIR)
 
 else
 
@@ -174,9 +189,8 @@ DEPENDS	:=	$(OFILES:.o=.d)
 #---------------------------------------------------------------------------------
 # main targets
 #---------------------------------------------------------------------------------
-#$(OUTPUT).self: $(OUTPUT).elf
-#$(OUTPUT).elf:	$(OFILES)
-$(OUTPUT).a: base64.o db_support.o fa_data.o fa_fs.o fileaccess.o font_b.o ps3_main.o rstr.o sqlite3.o str.o vfs.o wd.o
+$(OUTPUT).self: $(OUTPUT).elf
+$(OUTPUT).elf: main.o
 
 #---------------------------------------------------------------------------------
 # This rule links in binary data with the .bin extension
