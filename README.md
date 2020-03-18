@@ -1,7 +1,7 @@
 # Ps3_Sqlite
 A porting of SQLite on PS3
 
-It uses PSL1GHT V2 and install the library in $PSL1GHT/ppu/lib, C Header file in $PSL1GHT/ppu/include.
+It uses PSL1GHT V2 and install the library in $PSL1GHT/ppu/lib, C Header files in $PSL1GHT/ppu/include.
 
 SQLite sources version 3.31.1 - SQLite Is Public Domain ... (https://www.sqlite.org/copyright.html)
 
