@@ -9,8 +9,13 @@ Other sources are from Movian (https://github.com/andoma/movian), a big thanks t
 
 Usage
 make lib
+
   To make lib file
+  
 make install
+
   To make libs file and install into $PORTLIBS 
+  
 make
+
   To make example
