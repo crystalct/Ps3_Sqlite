@@ -7,6 +7,10 @@ ifeq ($(strip $(PSL1GHT)),)
 $(error "Please set PSL1GHT in your environment. export PSL1GHT=<path>")
 endif
 
+ifeq ($(strip $(PORTLIBS)),)
+$(error "Please set PORTLIBS in your environment. export PORTLIBS=<path>")
+endif
+
 #---------------------------------------------------------------------------------
 #  TITLE, APPID, CONTENTID, ICON0 SFOXML before ppu_rules.
 #---------------------------------------------------------------------------------
@@ -163,18 +167,18 @@ npdrm: $(BUILD)
 
 install: lib
 	@echo Copying...
-	@cp $(BUILDDIR)/libps3sqlite.a $(PSL1GHT)/ppu/lib
-	@cp include/ps3sqlite.h $(PSL1GHT)/ppu/include
-	@cp include/sqlite3.h $(PSL1GHT)/ppu/include
-	@cp include/fa_proto.h $(PSL1GHT)/ppu/include
+	@cp $(BUILDDIR)/libps3sqlite.a $(PORTLIBS)/lib
+	@mkdir -p $(PORTLIBS)/include/ps3sqlite
+	@cp include/sqlite3.h $(PORTLIBS)/include
+	@cp include/*.h $(PORTLIBS)/include/ps3sqlite
 	@echo Done!
 	
 uninstall:
 	@echo Removing...
-	@rm -fr $(PSL1GHT)/ppu/lib/libps3sqlite.a
-	@rm -fr $(PSL1GHT)/ppu/include/ps3sqlite.h
-	@rm -fr $(PSL1GHT)/ppu/include/sqlite3.h
-	@rm -fr $(PSL1GHT)/ppu/include/fa_proto.h
+	@rm -fr $(PORTLIBS)/lib/libps3sqlite.a
+	@rm -fr $(PORTLIBS)/include/sqlite3.h
+	@rm -fr $(PORTLIBS)/include/ps3sqlite/*.h
+	@rmdir $(PORTLIBS)/include/ps3sqlite
 	@echo Done!
 	
 lib:
