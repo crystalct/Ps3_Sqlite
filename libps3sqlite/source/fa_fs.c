@@ -211,7 +211,7 @@ fs_open(fa_protocol_t *fap, const char *url, char *errbuf, size_t errlen,
     if(!(flags & FA_APPEND))
       open_flags |= O_TRUNC;
 	
-	printf("fs_open - url: %s - opem_flgas:%d\n",url, open_flags);
+	//printf("fs_open - url: %s - opem_flgas:%d\n",url, open_flags);
 
     fd = open(url, open_flags, 0666);
     if(fd == -1) {

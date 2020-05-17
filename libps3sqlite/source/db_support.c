@@ -300,7 +300,7 @@ memlogger_fn(callout_t *co, void *aux)
 int db_init(char *cache_path)
 {
   int i;
-  printf("cache_path: %s\n", cache_path);
+  //printf("cache_path: %s\n", cache_path);
   sqlite3_temp_directory = cache_path;
   vfs_set_cache_path(cache_path);
 #if ENABLE_SQLITE_LOCKING

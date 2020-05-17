@@ -179,7 +179,7 @@ static char vfs_cache_path[256];
 
 void vfs_set_cache_path(char* chace_path) {
 	sprintf(vfs_cache_path,"%s",chace_path);
-	printf("vfs_cache_path : %s\n",vfs_cache_path);
+	//printf("vfs_cache_path : %s\n",vfs_cache_path);
 }
 
 static int
@@ -224,7 +224,7 @@ vfs_open(sqlite3_vfs *pVfs, const char *zName, sqlite3_file *id, int flags,
   //printf("ZNAME: %s\n", zName);
   vf->fh = fa_open_ex(zName, errbuf, sizeof(errbuf), openflags, NULL);
 
-  printf("Open%s file %s : %s -- %s openflags:0x%x",
+  printf("Open%s file %s : %s -- %s openflags:0x%x\n",
 	   isDelete ? "+Delete" : "",
 	   zName,
 	   vf->fh == NULL ? "Fail" : "OK",

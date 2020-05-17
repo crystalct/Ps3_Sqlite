@@ -288,7 +288,7 @@ fa_open_ex(const char *url, char *errbuf, size_t errsize, int flags,
     snprintf(errbuf, errsize, "FS does not support writing");
     fh = NULL;
   } else {
-    printf("fap->fap_open\n");
+    //printf("fap->fap_open\n");
 	fh = fap->fap_open(fap, filename, errbuf, errsize, flags, foe);
   }
   fap_release(fap);
