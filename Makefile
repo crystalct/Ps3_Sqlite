@@ -40,7 +40,7 @@ INCLUDES	:=	include
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:=	-lps3sqlite -lfont -lfreetype -ltiny3d -lz -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
+LIBS		:=	-lps3sqlite -lfont -lfreetype -ltiny3d -lrsx -lz -lsimdmath -lgcm_sys -lio -lsysutil -lrt -llv2 -lsysmodule -lm
 
 
 #---------------------------------------------------------------------------------
