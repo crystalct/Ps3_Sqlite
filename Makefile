@@ -7,10 +7,6 @@ ifeq ($(strip $(PSL1GHT)),)
 $(error "Please set PSL1GHT in your environment. export PSL1GHT=<path>")
 endif
 
-ifeq ($(strip $(PORTLIBS)),)
-$(error "Please set PORTLIBS in your environment. export PORTLIBS=<path>")
-endif
-
 #---------------------------------------------------------------------------------
 #  TITLE, APPID, CONTENTID, ICON0 SFOXML before ppu_rules.
 #---------------------------------------------------------------------------------
